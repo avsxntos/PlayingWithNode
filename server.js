@@ -1,6 +1,15 @@
 const express = require('express');
 const app = express();
 app.use(express.json());
+const mysql = require ('mysql2');
+
+// Configuração da conexão com o banco de dados
+const conexao = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'senha',
+    database: 'teste',
+});
 
 
 // Rota simples 
@@ -8,6 +17,7 @@ app.get('/',(req, res) => {
     res.send('Servidor rodando!');
 });
 
+// Iniciando o servidor na porta 3000
 app.listen(3000, () => {
     console.log('Servidor iniciando na porta 3000');
 });
@@ -27,7 +37,7 @@ app.get('/usuarios', (req, res) => {
     const {nome, email} = req.body;
     conexao.query('SELECT * FROM usuarios', (err, results) => {
         if (err) throw err;
-        res.json(results);
+        
     });
 });
 
@@ -35,7 +45,7 @@ app.get('/inserir', (req, res) => {
     const sql = 'INSERT INTO usuarios (nome, email) VALUES (?, ?)';
     const valores = [ 'Giovanna', "gi.vitalino@gmail.com"];
 
-    conexao.query(sql, valores, (err, res) => {
+    conexao.query(sql, valores, (err, results) => {
         if (err) throw err;
         console.log('Usuário inserido com sucesso')
     });

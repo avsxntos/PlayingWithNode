@@ -8,7 +8,7 @@ const conexao = mysql.createConnection({
 });
 
 const sql = 'INSERT INTO usuarios (nome, email) VALUES (?, ?)';
-const valores = [ 'Arthur', 'thur.vitalino@gmail.com'];
+const valores = [ ['Arthur', 'thur.vitalino@gmail.com'], ['Maria', 'maria.blabla@gmail.com'] ];
 
 conexao.query(sql, valores, (err, res) => {
     if (err) throw err;
